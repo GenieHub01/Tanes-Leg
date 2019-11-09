@@ -1,0 +1,17 @@
+.pac-container{
+    z-index: 1051 !important;
+}
+
+
+.controls {
+
+    top: 5px!important;
+
+
+    width: 320px!important;
+    margin-top: 7px;
+}
+
+.maps input {
+    background: white;
+}

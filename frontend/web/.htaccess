@@ -1,0 +1,28 @@
+RewriteEngine on
+
+## Completely hide some files and directories.
+RedirectMatch 404 "(?:.*)/(?:[.#].*)$"
+RedirectMatch 404 "(?:.*)~$"
+RedirectMatch 404 "(?:.*)/(?:CVS|RCS|_darcs)(?:/.*)?$"
+
+#RewriteCond %{HTTPS} off
+#RewriteCond %{HTTP:X-Forwarded-Proto} !https
+#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# if a directory or a file exists, use it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# otherwise forward it to index.php
+RewriteRule . index.php
+#RewriteRule ^(.*)\?*$ index.php/$1 [L,QSA]
+
+AddDefaultCharset utf-8
+
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php73” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php73 .php .php7 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
