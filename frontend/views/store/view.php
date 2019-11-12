@@ -22,7 +22,17 @@
     </div>
 
     <div class="col-md-6">
-        <?= \yii\helpers\Html::a('Add to CART','#',['class'=>'btn btn-primary add_to_cart ','data-id'=>$model->id])  ?>
+        <? if (Yii::$app->user->isGuest): ?>
+
+            <div class="alert alert-warning">
+                You must login or sign up to make a purchase
+            </div>
+
+        <? else: ?>
+
+            <?= \yii\helpers\Html::a('Add to CART','#',['class'=>'btn btn-primary add_to_cart ','data-id'=>$model->id])  ?>
+
+        <? endif; ?>
 
         <div class="row">
             <div class="col-sm-6">
