@@ -65,31 +65,40 @@ endif;
             <?endif;?>
 
         </div>
+        <? if (Yii::$app->user->isGuest): ?>
 
-        <?php
-        $items_month = ['01'=>'01','02'=>'02','03'=>'03','04'=>'04','05'=>'05','06'=>'06','07'=>'07','08'=>'08','09'=>'09','10'=>'10','11'=>'11','12'=>'12'];
-        $items_year =  ['2020'=>'2020','2021'=>'2021','2022'=>'2022','2023'=>'2023','2024'=>'2024','2025'=>'2025'];
-        if ($model->status == 1 || $model->status == 2) {
-        $form = ActiveForm::begin(['id' => 'Worldpay','action'=>'/payment/worldpay?id=' . $model->id]); ?>
-        Credit Card Parameters
-        <div class="d-flex">
-            <?= Html::hiddenInput('method', 'purchase'); ?>
-            <?= Html::textInput('cnumber',  null, ['class'=>'form-control','placeholder'=>'Card Number 16 digits']) ?>
-            <?= Html::dropDownList('expiryMonth', 'null', $items_month, ['class'=>'form-control']); ?>
-            <?= Html::dropDownList('expiryYear', 'null', $items_year, ['class'=>'form-control']); ?>
-            <?= Html::textInput('cvv',  null, ['class'=>'form-control','placeholder'=>'Card CVV 3 digits']) ?>
-            <?= Html::submitButton('Pay',['class'=>'btn btn-primary']) ?>
-        </div>
-        <?php
-        } elseif  ($model->status == 10 && $model->created_ts > time() - 30*24*60*60) {
-        $form = ActiveForm::begin(['id' => 'Worldpay','action'=>'/payment/worldpay?id=' . $model->id]); ?>
-        Order Refund Parameters
-        <div class="d-flex">
-            <?= Html::hiddenInput('method', 'refund'); ?>
-            <?= Html::textInput('number', $model->wp_code, ['class'=>'form-control','placeholder'=>'Order Code']) ?>
-            <?= Html::submitButton('Refund',['class'=>'btn btn-primary']) ?>
-        </div>
-        <?php } ActiveForm::end();?>
+            <div class="alert alert-warning">
+                You must login or sign up to make a purchase
+            </div>
+
+        <? else: ?>
+
+            <?php
+            $items_month = ['01'=>'01','02'=>'02','03'=>'03','04'=>'04','05'=>'05','06'=>'06','07'=>'07','08'=>'08','09'=>'09','10'=>'10','11'=>'11','12'=>'12'];
+            $items_year =  ['2020'=>'2020','2021'=>'2021','2022'=>'2022','2023'=>'2023','2024'=>'2024','2025'=>'2025'];
+            if ($model->status == 1 || $model->status == 2) {
+            $form = ActiveForm::begin(['id' => 'Worldpay','action'=>'/payment/worldpay?id=' . $model->id]); ?>
+            Credit Card Parameters
+            <div class="d-flex">
+                <?= Html::hiddenInput('method', 'purchase'); ?>
+                <?= Html::textInput('cnumber',  null, ['class'=>'form-control','placeholder'=>'Card Number 16 digits']) ?>
+                <?= Html::dropDownList('expiryMonth', 'null', $items_month, ['class'=>'form-control']); ?>
+                <?= Html::dropDownList('expiryYear', 'null', $items_year, ['class'=>'form-control']); ?>
+                <?= Html::textInput('cvv',  null, ['class'=>'form-control','placeholder'=>'Card CVV 3 digits']) ?>
+                <?= Html::submitButton('Pay',['class'=>'btn btn-primary']) ?>
+            </div>
+            <?php
+            } elseif  ($model->status == 10 && $model->created_ts > time() - 30*24*60*60) {
+            $form = ActiveForm::begin(['id' => 'Worldpay','action'=>'/payment/worldpay?id=' . $model->id]); ?>
+            Order Refund Parameters
+            <div class="d-flex">
+                <?= Html::hiddenInput('method', 'refund'); ?>
+                <?= Html::textInput('number', $model->wp_code, ['class'=>'form-control','placeholder'=>'Order Code']) ?>
+                <?= Html::submitButton('Refund',['class'=>'btn btn-primary']) ?>
+            </div>
+            <?php } ActiveForm::end();?>
+
+        <? endif; ?>
 
        <p></p>
 

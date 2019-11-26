@@ -22,17 +22,8 @@
     </div>
 
     <div class="col-md-6">
-        <? if (Yii::$app->user->isGuest): ?>
 
-            <div class="alert alert-warning">
-                You must login or sign up to make a purchase
-            </div>
-
-        <? else: ?>
-
-            <?= \yii\helpers\Html::a('Add to CART','#',['class'=>'btn btn-primary add_to_cart ','data-id'=>$model->id])  ?>
-
-        <? endif; ?>
+        <?= \yii\helpers\Html::a('Add to CART','#',['class'=>'btn btn-primary add_to_cart ','data-id'=>$model->id])  ?>
 
         <div class="row">
             <div class="col-sm-6">
